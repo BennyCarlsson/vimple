@@ -2,13 +2,12 @@ import { useEffect, useState } from 'react'
 
 function App() {
   const AMOUNT_OF_SQUARES = 500
-  const ROW_LENGTH = 25
+  const ROW_LENGTH = 30
   const [cursorPosition, setCursorPosition] = useState<{
     x: number
     y: number
   }>({ x: 4, y: 5 })
   const activeIndex = cursorPosition.x * ROW_LENGTH + cursorPosition.y
-  console.log(cursorPosition)
 
   const moveUp = () =>
     setCursorPosition(prevState => ({ ...prevState, x: prevState.x - 1 }))
@@ -41,14 +40,11 @@ function App() {
       window.removeEventListener('keypress', handleUserKeyPress)
     }
   })
-
   return (
     <div className='flex justify-center pt- w-screen h-screen'>
       <div className='w-3/4 lg:w-2/3 2xl:1/3 mockup-window border bg-base-300 shadow-lg '>
-        <div className='flex justify-center px-4 py-16 bg-base-200'>
-          <div
-            className={`grid grid-cols-[repeat(${ROW_LENGTH},minmax(0,1fr))] gap-1`}
-          >
+        <div className='flex justify-center px-4 py-6 bg-base-200'>
+          <div className={`grid grid-cols-30 gap-1`}>
             {[...Array(AMOUNT_OF_SQUARES)].map((_, i) => (
               <Square key={i} active={activeIndex === i} />
             ))}
