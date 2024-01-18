@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-
+// Limit out of scope in grid
 function App() {
-  const AMOUNT_OF_SQUARES = 500
+  const AMOUNT_OF_SQUARES = 510
   const ROW_LENGTH = 30
   const [cursorPosition, setCursorPosition] = useState<{
     x: number
@@ -9,14 +9,36 @@ function App() {
   }>({ x: 4, y: 5 })
   const activeIndex = cursorPosition.x * ROW_LENGTH + cursorPosition.y
 
-  const moveUp = () =>
-    setCursorPosition(prevState => ({ ...prevState, x: prevState.x - 1 }))
+  const moveUp = () => {
+    setCursorPosition(prevState => {
+      if (prevState.x <= 0) {
+        return prevState
+      }
+
+      return { ...prevState, x: prevState.x - 1 }
+    })
+  }
   const moveDown = () =>
-    setCursorPosition(prevState => ({ ...prevState, x: prevState.x + 1 }))
+    setCursorPosition(prevState => {
+      if (prevState.x >= Math.floor(AMOUNT_OF_SQUARES / ROW_LENGTH) - 1) {
+        return prevState
+      }
+      return { ...prevState, x: prevState.x + 1 }
+    })
   const moveLeft = () =>
-    setCursorPosition(prevState => ({ ...prevState, y: prevState.y - 1 }))
+    setCursorPosition(prevState => {
+      if (prevState.y <= 0) {
+        return prevState
+      }
+      return { ...prevState, y: prevState.y - 1 }
+    })
   const moveRight = () =>
-    setCursorPosition(prevState => ({ ...prevState, y: prevState.y + 1 }))
+    setCursorPosition(prevState => {
+      if (prevState.y >= ROW_LENGTH - 1) {
+        return prevState
+      }
+      return { ...prevState, y: prevState.y + 1 }
+    })
 
   const handleUserKeyPress = (e: KeyboardEvent) => {
     if (e.key === 'k') {
