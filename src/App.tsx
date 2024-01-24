@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-// Limit out of scope in grid
+import { KBDS } from './components/KBDS'
+
 function App() {
   const AMOUNT_OF_SQUARES = 510
   const ROW_LENGTH = 30
@@ -18,6 +19,7 @@ function App() {
       return { ...prevState, x: prevState.x - 1 }
     })
   }
+
   const moveDown = () =>
     setCursorPosition(prevState => {
       if (prevState.x >= Math.floor(AMOUNT_OF_SQUARES / ROW_LENGTH) - 1) {
@@ -25,6 +27,7 @@ function App() {
       }
       return { ...prevState, x: prevState.x + 1 }
     })
+
   const moveLeft = () =>
     setCursorPosition(prevState => {
       if (prevState.y <= 0) {
@@ -32,6 +35,7 @@ function App() {
       }
       return { ...prevState, y: prevState.y - 1 }
     })
+
   const moveRight = () =>
     setCursorPosition(prevState => {
       if (prevState.y >= ROW_LENGTH - 1) {
@@ -72,12 +76,7 @@ function App() {
             ))}
           </div>
         </div>
-        <div className='flex justify-center gap-1 pt-2'>
-          <kbd className='kbd'>H</kbd>
-          <kbd className='kbd'>J</kbd>
-          <kbd className='kbd'>K</kbd>
-          <kbd className='kbd'>L</kbd>
-        </div>
+        <KBDS />
       </div>
     </div>
   )
