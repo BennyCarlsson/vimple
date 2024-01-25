@@ -1,39 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useKeysDown } from '../../hooks/useKeysDown'
 
 export const KBDS = () => {
-  const [keysDown, setKeysDown] = useState<Set<string>>(new Set())
-
-  useEffect(() => {
-    const handleKeyUp = (e: KeyboardEvent) => {
-      setKeysDown(prevState => {
-        prevState.delete(e.key)
-        return new Set(prevState)
-      })
-    }
-    window.addEventListener('keyup', handleKeyUp)
-    return () => window.removeEventListener('keyup', handleKeyUp)
-  })
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.repeat) {
-        return
-      }
-      setKeysDown(prevState => new Set([...prevState, e.key]))
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  })
+  const { isKeyDown } = useKeysDown()
 
   // Todo lowercase and uppercase
+  // Todo Make clickable and mobile friendly
   return (
     <div className='flex justify-center gap-1 pt-2'>
-      <kbd className={`kbd ${keysDown.has('h') ? 'bg-base-300' : ''}`}>H</kbd>
-      <kbd className={`kbd ${keysDown.has('j') ? 'bg-base-300' : ''}`}>J</kbd>
-      <kbd className={`kbd ${keysDown.has('k') ? 'bg-base-300' : ''}`}>K</kbd>
-      <kbd className={`kbd ${keysDown.has('l') ? 'bg-base-300' : ''}`}>
-        L
-      </kbd>{' '}
+      <kbd className={`kbd ${isKeyDown('h') ? 'bg-base-300' : ''}`}>H</kbd>
+      <kbd className={`kbd ${isKeyDown('j') ? 'bg-base-300' : ''}`}>J</kbd>
+      <kbd className={`kbd ${isKeyDown('k') ? 'bg-base-300' : ''}`}>K</kbd>
+      <kbd className={`kbd ${isKeyDown('l') ? 'bg-base-300' : ''}`}>L</kbd>
     </div>
   )
 }
