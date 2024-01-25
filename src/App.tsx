@@ -1,8 +1,6 @@
 import { KBDS } from './components/KBDS'
 import { Grid } from './components/Grid'
 
-// A eol and I bol
-
 function App() {
   return (
     <div className='flex justify-center pt- w-screen h-screen'>
