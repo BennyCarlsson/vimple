@@ -1,4 +1,5 @@
-import { ReactNode, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { Square } from '../Square'
 
 export const Grid = () => {
   const CONTENT: { [key: string]: string } = {
@@ -124,19 +125,3 @@ export const Grid = () => {
     </div>
   )
 }
-
-const Square = ({
-  active,
-  children,
-}: {
-  active: boolean
-  children: ReactNode
-}) => (
-  <div
-    className={`h-5 w-5 grid place-content-center text-white underline underline-offset-2 ${
-      active ? 'bg-primary' : 'bg-secondary'
-    }`}
-  >
-    {children}
-  </div>
-)
