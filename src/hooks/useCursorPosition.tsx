@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AMOUNT_OF_SQUARES, CONTENT, ROW_LENGTH } from '../utils/config'
+import { getContentFromCoordinates } from '../utils/utils'
 
 export const useCursorPosition = () => {
   const [cursorPosition, setCursorPosition] = useState<{
@@ -65,6 +66,30 @@ export const useCursorPosition = () => {
       return { ...prevState, y: prevState.y + 1 }
     })
 
+  const nextWord = () => {
+    setCursorPosition(prevState => {
+      let currentY = prevState.y
+      let passedEmptySquare = false
+
+      while (currentY <= ROW_LENGTH - 1) {
+        const currentContent = getContentFromCoordinates({
+          x: prevState.x,
+          y: currentY,
+        })
+
+        if (passedEmptySquare && currentContent) {
+          return { x: prevState.x, y: currentY }
+        } else if (currentContent === undefined) {
+          passedEmptySquare = true
+        }
+
+        currentY++
+      }
+
+      return prevState
+    })
+  }
+
   const handleUserKeyPress = (e: KeyboardEvent) => {
     if (e.shiftKey) {
       if (e.key === 'A' || e.key === 'a') {
@@ -85,6 +110,9 @@ export const useCursorPosition = () => {
       }
       if (e.key === 'h') {
         moveLeft()
+      }
+      if (e.key === 'w') {
+        nextWord()
       }
     }
   }
