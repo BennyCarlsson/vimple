@@ -1,4 +1,4 @@
-import { useCursorPosition } from '../../hooks/useCursorPosition'
+import { useCursor } from '../../hooks/useCursorPosition'
 import { AMOUNT_OF_SQUARES } from '../../utils/config'
 import {
   calculateCordinatesFromIndex,
@@ -7,7 +7,7 @@ import {
 import { Square } from '../Square'
 
 export const Grid = () => {
-  const { activeIndex } = useCursorPosition()
+  const { activeIndex } = useCursor()
 
   return (
     <div className={`grid grid-cols-30 gap-1`}>
