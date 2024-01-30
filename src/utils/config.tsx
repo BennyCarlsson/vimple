@@ -1,4 +1,5 @@
 export const CONTENT: { [key: string]: string } = {
+  x5y1: '!',
   x5y2: 'H',
   x5y3: 'E',
   x5y4: 'L',
