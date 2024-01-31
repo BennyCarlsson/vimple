@@ -7,7 +7,7 @@ import {
 import { Square } from '../Square'
 
 export const Grid = () => {
-  const { activeIndex } = useCursor()
+  const { activeIndex, cursorState } = useCursor()
 
   return (
     <div className={`grid grid-cols-30 gap-1`}>
@@ -16,6 +16,7 @@ export const Grid = () => {
           {getContentFromCoordinates(calculateCordinatesFromIndex(i))}
         </Square>
       ))}
+      <p>{cursorState}</p>
     </div>
   )
 }

@@ -1,33 +1,6 @@
 import { CursorPosition } from '../hooks/useCursorPosition'
 import { AMOUNT_OF_SQUARES, CONTENT, ROW_LENGTH } from '../utils/config'
-import { getContentFromCoordinates } from '../utils/utils'
-
-const iskeyword_array = [
-  '~',
-  '!',
-  '@',
-  '#',
-  '$',
-  '%',
-  '*',
-  '&',
-  '*',
-  '(',
-  ')',
-  '-',
-  '=',
-  '+',
-  '}',
-  ']',
-  ';',
-  '"',
-  '\\',
-  ',',
-  '<',
-  '.',
-  '>',
-  '/',
-]
+import { getContentFromCoordinates, iskeyword } from '../utils/utils'
 
 export const appendAtEndOfLine = (cursorPosition: CursorPosition) => {
   let n = ROW_LENGTH - 1
@@ -93,10 +66,7 @@ export const nextWord = (cursorPosition: CursorPosition) => {
 
     if (passedEmptySquare && currentContent) {
       return { x: cursorPosition.x, y: currentY }
-    } else if (
-      currentContent === undefined ||
-      iskeyword_array.includes(currentContent)
-    ) {
+    } else if (currentContent === undefined || iskeyword(currentContent)) {
       passedEmptySquare = true
     }
 
@@ -144,12 +114,12 @@ export const previousWord = (cursorPosition: CursorPosition) => {
     }
 
     if (
-      (!currentContent || iskeyword_array.includes(currentContent)) &&
+      (!currentContent || iskeyword(currentContent)) &&
       foundBeginningOfWord
     ) {
       return { x: cursorPosition.x, y: currentY + 1 }
     }
-    if (currentContent || iskeyword_array.includes(currentContent)) {
+    if (currentContent || iskeyword(currentContent)) {
       foundBeginningOfWord = true
     }
     currentY--
@@ -181,5 +151,35 @@ export const previousWORD = (cursorPosition: CursorPosition) => {
     currentY--
   }
 
+  return cursorPosition
+}
+
+export const findChar = (cursorPosition: CursorPosition, char: string) => {
+  let currentY = cursorPosition.y + 1
+  while (currentY < ROW_LENGTH - 1) {
+    const currentContent = getContentFromCoordinates({
+      x: cursorPosition.x,
+      y: currentY,
+    })
+    if (currentContent === char) {
+      return { x: cursorPosition.x, y: currentY }
+    }
+    currentY++
+  }
+  return cursorPosition
+}
+
+export const findCharBack = (cursorPosition: CursorPosition, char: string) => {
+  let currentY = cursorPosition.y - 1
+  while (currentY >= 0) {
+    const currentContent = getContentFromCoordinates({
+      x: cursorPosition.x,
+      y: currentY,
+    })
+    if (currentContent === char) {
+      return { x: cursorPosition.x, y: currentY }
+    }
+    currentY--
+  }
   return cursorPosition
 }
