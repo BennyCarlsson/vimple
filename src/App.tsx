@@ -1,5 +1,6 @@
 import { KBDS } from './components/KBDS'
 import { Grid } from './components/Grid'
+import { CursorStateText } from './components/CursorStateText'
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
         <div className='flex justify-center px-4 py-6 bg-base-200'>
           <Grid />
         </div>
+        <CursorStateText />
         <KBDS />
       </div>
     </div>
